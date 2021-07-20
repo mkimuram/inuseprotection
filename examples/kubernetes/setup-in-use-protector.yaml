@@ -1,0 +1,22 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: in-use-protector
+  namespace: kube-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: in-use-protector
+  template:
+    metadata:
+      labels:
+        app: in-use-protector
+    spec:
+      serviceAccount: in-use-protector
+      containers:
+        - name: in-use-protector
+          image: in-use-protector:latest
+          args:
+            - "--v=5"
+          imagePullPolicy: IfNotPresent
